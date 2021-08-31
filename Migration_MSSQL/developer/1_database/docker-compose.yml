@@ -1,0 +1,18 @@
+version: '2.1'
+services:
+ dbmssql:
+    image: databasemssql:3.2.0
+    build:
+         context: ./
+         dockerfile: database/Dockerfile
+    environment:
+         SA_PASSWORD: 1234*Password
+         ACCEPT_EULA: Y
+    extra_hosts:
+         - "apim:127.0.0.1"
+    ports:
+         - "1433:1433"
+networks: 
+  default: 
+    external: 
+      name: external-Network     

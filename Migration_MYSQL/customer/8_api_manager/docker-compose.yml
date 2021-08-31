@@ -1,0 +1,28 @@
+version: '2.1'
+services:
+ api-manager:
+    image: api-manager:4.0.0
+    build:
+          context: ./
+          dockerfile: apimanager/Dockerfile
+    extra_hosts:
+          - "apim:127.0.0.1"
+    ports:
+         - "9443:9443"
+         - "9763:9763"
+         - "8280:8280"
+         - "8243:8243"
+         - "9095:9095"
+         - "5672:5672"
+
+    volumes :
+         - DataVolume:/usr/local/test/
+
+networks: 
+  default: 
+    external: 
+      name: external-Network 
+    
+volumes:
+   DataVolume:
+     external: true 

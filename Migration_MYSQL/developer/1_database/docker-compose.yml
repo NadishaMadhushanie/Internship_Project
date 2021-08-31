@@ -1,0 +1,17 @@
+version: '2.1'
+services:
+ db:
+    image: database:3.2.0
+    build:
+         context: ./
+         dockerfile: database/Dockerfile
+    environment:
+         MYSQL_ROOT_PASSWORD: pwd
+    extra_hosts:
+         - "apim:127.0.0.1"
+    ports:
+         - "13306:3306"
+networks: 
+  default: 
+    external: 
+      name: external-Network     

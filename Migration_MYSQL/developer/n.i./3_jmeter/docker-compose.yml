@@ -1,0 +1,26 @@
+version: '2.1'
+services:
+ jmeter-master:
+    container_name: jmeter-master
+    image: jmeter
+    ports:
+          - "60000:60000"
+    extra_hosts:
+          - "apim:127.0.0.1"
+    volumes:
+      - ./jmeter.jmx:/scripts/jmeter.jmx
+    entrypoint:
+      - jmeter
+      - -n
+      - -t
+      - /scripts/jmeter.jmx
+      - -l
+      - /logs/results.csv
+      - -j
+      - /logs/jmeter.log
+      - -LDEBUG
+
+networks: 
+  default: 
+    external: 
+      name: external-Network    

@@ -1,0 +1,14 @@
+version: '2.1'
+services:
+ db3:
+    image: database3:4.0.0
+    build:
+         context: ./
+         dockerfile: database/Dockerfile
+    extra_hosts:
+         - "apim:127.0.0.1"
+networks: 
+  default: 
+    external: 
+      name: external-Network 
+    

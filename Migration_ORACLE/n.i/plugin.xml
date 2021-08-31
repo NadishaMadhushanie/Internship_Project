@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databases>
+<database name="MYSQL">
+	<path>/home/user/Desktop/Migration</path>
+	<userName>root</userName>
+	<password>pwd</password>
+</database>
+
+<database name="ORACLE">
+
+</database>
+
+</databases>

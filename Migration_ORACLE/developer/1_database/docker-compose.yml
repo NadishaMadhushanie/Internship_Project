@@ -1,0 +1,19 @@
+version: '2.1'
+services:
+ dboracle:
+    image: databaseoracle:3.2.0
+    build:
+         context: ./
+         dockerfile: database/Dockerfile
+    environment:
+         ORACLE_SID: PWD
+         ORACLE_PWD: PWD
+         ORACLE_ALLOW_REMOTE: 'true'
+    extra_hosts:
+         - "apim:127.0.0.1"
+    ports:
+         - "1521:1521"
+networks: 
+  default: 
+    external: 
+      name: external-Network   

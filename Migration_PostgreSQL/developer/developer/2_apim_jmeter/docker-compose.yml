@@ -1,0 +1,50 @@
+version: '2.1'
+services:
+ api-manager:
+    image: apimanager:3.2.0
+    build:
+          context: ./
+          dockerfile: apimanager/Dockerfile
+    extra_hosts:
+          - "apim:127.0.0.1"
+    ports:
+         - "9443:9443"
+         - "9763:9763"
+         - "8280:8280"
+         - "8243:8243"
+    healthcheck:
+         test: "${DOCKER_HEALTHCHECK_TEST:-curl apim:9443/healthy}"
+         interval: 2s
+         timeout: 5s
+         retries: 5000
+
+
+ jmeter-master1:
+    container_name: jmeter-master1
+    image: jmeter
+    ports:
+          - "60000:60000"
+    extra_hosts:
+          - "apim:127.0.0.1"
+    links:
+          - api-manager
+    depends_on:
+          api-manager:
+            condition: service_healthy
+    volumes:
+      - ./jmeter.jmx:/scripts/jmeter.jmx
+    entrypoint:
+      - jmeter
+      - -n
+      - -t
+      - /scripts/jmeter.jmx
+      - -l
+      - /logs/results.csv
+      - -j
+      - /logs/jmeter.log
+      - -LDEBUG
+
+networks: 
+  default: 
+    external: 
+      name: external-Network    
